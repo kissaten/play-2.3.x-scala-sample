@@ -8,7 +8,7 @@ import play.api.libs.concurrent.Execution.Implicits.defaultContext
 object RequestIdLoggingFilter extends Filter {
   def apply(nextFilter: (RequestHeader) => Future[Result])
   (requestHeader: RequestHeader): Future[Result] = {
-    Logger.info(s"request_id=${requestHeader.headers.get("X-Request-ID")}")
+    Logger.info(s"request_id=${requestHeader.headers.get("X-Request-ID").getOrElse("None")}")
     nextFilter(requestHeader)
   }
 }
