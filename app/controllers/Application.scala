@@ -13,21 +13,19 @@ object Application extends Controller {
 
   def login = Action {
     val r = (new scala.util.Random).nextInt(100000)
-    Ok("Welcome!").withSession(
-      "connected" -> s"${r}@gmail.com"
-    );
+    Cache.set("connected", s"${r}@gmail.com")
+    Ok(s"Welcome, ${Cache.getAs[String]("connected")}")
   }
 
   def test = Action { request =>
-    val user = request.session.get("connected");
-    if(user != null) {
-      Ok("Hello " + user);
-    } else {
-      Unauthorized("Oops, you are not connected");
+    Cache.getAs[String]("connected") match {
+      case Some(user) => Ok("Hello " + user)
+      case None => Unauthorized("Oops, you are not connected");
     }
   }
 
   def logout = Action { request =>
-    Ok("Bye").withNewSession;
+    Cache.set("connected", None)
+    Ok("Bye")
   }
 }
