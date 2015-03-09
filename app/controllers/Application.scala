@@ -5,7 +5,7 @@ import play.api.mvc._
 import play.api.cache.Cache
 import play.api.Play.current
 
-object Application extends Controller {
+bject Application extends Controller {
 
   def index = Action {
     Ok(views.html.index("New stuff!!!! Your new application is ready."))
