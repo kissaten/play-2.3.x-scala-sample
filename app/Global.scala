@@ -14,5 +14,13 @@ object RequestIdLoggingFilter extends Filter {
 }
 
 object Global extends WithFilters(RequestIdLoggingFilter) {
-  // ...
+
+  override def onStart(app: Application) {
+    Logger.info("Application has started");
+  }
+
+  override def onStop(app: Application) {
+    Logger.info("CUSTOM Application shutdown...");
+  }
+
 }
